@@ -1,1 +1,3 @@
-# 4th-ML100Days
+1.B
+2.C
+3.D and E
