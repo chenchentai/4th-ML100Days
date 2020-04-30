@@ -1,0 +1,21 @@
+import os
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+
+dir_data = '/Users/chenyang/Desktop/data'
+
+f_app_train = os.path.join(dir_data, 'application_train.csv')
+app_train = pd.read_csv(f_app_train)
+app_train.shape
+
+sub_df = app_train[app_train['DAYS_EMPLOYED'] != 365243]
+
+plt.plot(sub_df['DAYS_EMPLOYED'] / (-365), np.log10(sub_df['AMT_INCOME_TOTAL'] ), '.')
+plt.xlabel('Days of employed (year)')
+plt.ylabel('AMT_INCOME_TOTAL (log-scale)')
+plt.show()
+corr = np.corrcoef(sub_df['DAYS_EMPLOYED'] / (-365), np.log10(sub_df['AMT_INCOME_TOTAL']))
+print("Correlation: %.4f" % (corr[0][1]))
