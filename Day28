@@ -1,0 +1,13 @@
+(1)
+import math
+df['longitude_diff'] = (df['latitude_diff']*0.75756)
+df[['longitude_diff', 'longitude_diff', 'latitude_diff']].head()
+
+train_X = scaler.fit_transform(df)
+print(f'Linear Reg Score : {cross_val_score(Linear, train_X, train_Y, cv=5).mean()}')
+print(f'Gradient Boosting Reg Score : {cross_val_score(GDBT, train_X, train_Y, cv=5).mean()}')
+
+(2)
+train_X = scaler.fit_transform(df[['longitude_diff']])
+print(f'Linear Reg Score : {cross_val_score(Linear, train_X, train_Y, cv=5).mean()}')
+print(f'Gradient Boosting Reg Score : {cross_val_score(GDBT, train_X, train_Y, cv=5).mean()}')
