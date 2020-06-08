@@ -1,0 +1,21 @@
+df['Embarked'] = df['Embarked'].fillna('None')
+mean_df = df.groupby(['Embarked'])['Age'].mean().reset_index()
+mode_df = df.groupby(['Embarked'])['Age'].apply(lambda x: x.mode()[0]).reset_index()
+median_df = df.groupby(['Embarked'])['Age'].median().reset_index()
+max_df = df.groupby(['Embarked'])['Age'].max().reset_index()
+temp = pd.merge(mean_df, mode_df, how='left', on=['Embarked'])
+temp = pd.merge(temp, median_df, how='left', on=['Embarked'])
+temp = pd.merge(temp, max_df, how='left', on=['Embarked'])
+temp.columns = ['Embarked', 'Survived_Mean', 'Survived_Mode', 'Survived_Median', 'Survived_Max']
+temp
+
+num_features = []
+for dtype, feature in zip(df.dtypes, df.columns):
+    if dtype == 'float64' or dtype == 'int64':
+        num_features.append(feature)
+print(f'{len(num_features)} Numeric Features : {num_features}\n')
+
+df = df[num_features]
+df = df.fillna(-1)
+MMEncoder = MinMaxScaler()
+df.head()
