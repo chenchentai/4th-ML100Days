@@ -1,0 +1,29 @@
+estimator = RandomForestClassifier()
+estimator.fit(df.values, train_Y)
+feats = pd.Series(data=estimator.feature_importances_, index=df.columns)
+feats = feats.sort_values(ascending=False)
+feats
+
+train_X = MMEncoder.fit_transform(df)
+cross_val_score(estimator, train_X, train_Y, cv=5).mean()
+
+(1)
+  high_feature = list(feats[:5].index)
+  train_X = MMEncoder.fit_transform(df[high_feature])
+  cross_val_score(estimator, train_X, train_Y, cv=5).mean()
+
+(2)
+  import seaborn as sns
+  import matplotlib.pyplot as plt
+  sns.regplot(x=train_Y, y=df['Sex'], fit_reg=False)
+  plt.show()
+
+  sns.regplot(x=train_Y, y=df['Ticket'], fit_reg=False)
+  plt.show()
+
+  df['Add_char'] = (df['Ticket'] + df['Sex']) / 2
+  df['Multi_char'] = df['Ticket'] * df['Sex']
+  df['TS_div1p'] = df['Ticket'] / (df['Sex']+1) * 2
+  df['ST_div1p'] = df['Sex'] / (df['Ticket']+1) * 2
+  train_X = MMEncoder.fit_transform(df)
+  cross_val_score(estimator, train_X, train_Y, cv=5).mean()
