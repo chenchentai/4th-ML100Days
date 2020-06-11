@@ -1,0 +1,41 @@
+import pandas as pd
+import numpy as np
+import copy
+from sklearn.preprocessing import LabelEncoder, MinMaxScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_curve
+
+data_path = '/Users/chenyang/Desktop/data/'
+df = pd.read_csv(data_path + 'titanic1.csv')
+
+train_Y = df['Survived']
+df = df.drop(['PassengerId', 'Survived'] , axis=1)
+df.head()
+
+LEncoder = LabelEncoder()
+MMEncoder = MinMaxScaler()
+for c in df.columns:
+    df[c] = df[c].fillna(-1)
+    if df[c].dtype == 'object':
+        df[c] = LEncoder.fit_transform(list(df[c].values))
+    df[c] = MMEncoder.fit_transform(df[c].values.reshape(-1, 1))
+df.head()
+
+train_X = df.values
+train_X, test_X, train_Y, test_Y = train_test_split(train_X, train_Y, test_size=0.5)
+train_X, val_X, train_Y, val_Y = train_test_split(train_X, train_Y, test_size=0.5)
+
+rf = RandomForestClassifier(n_estimators=20, min_samples_split=10, min_samples_leaf=5, 
+                            max_features=4, max_depth=3, bootstrap=True)
+onehot = OneHotEncoder()
+lr = LogisticRegression(solver='lbfgs', max_iter=1000)
+
+rf.fit(train_X, train_Y)
+onehot.fit(rf.apply(train_X))
+lr.fit(onehot.transform(rf.apply(val_X)), val_Y)
+
+rf.apply(train_X)
