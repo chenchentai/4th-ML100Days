@@ -39,3 +39,20 @@ onehot.fit(rf.apply(train_X))
 lr.fit(onehot.transform(rf.apply(val_X)), val_Y)
 
 rf.apply(train_X)
+
+pred_rf_lr = lr.predict_proba(onehot.transform(rf.apply(test_X)))[:, 1]
+fpr_rf_lr, tpr_rf_lr, _ = roc_curve(test_Y, pred_rf_lr)
+
+pred_rf = rf.predict_proba(test_X)[:, 1]
+fpr_rf, tpr_rf, _ = roc_curve(test_Y, pred_rf)
+
+import matplotlib.pyplot as plt
+
+plt.plot([0, 1], [0, 1], 'k--')
+plt.plot(fpr_rf, tpr_rf, label='RF')
+plt.plot(fpr_rf_lr, tpr_rf_lr, label='RF + LR')
+plt.xlabel('False positive rate')
+plt.ylabel('True positive rate')
+plt.title('ROC curve')
+plt.legend(loc='best')
+plt.show()
