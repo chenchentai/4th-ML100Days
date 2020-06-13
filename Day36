@@ -1,0 +1,8 @@
+threshold = 0.5 
+y_pred_binarized = np.where(y_pred>threshold, 1, 0) 
+f2 = y_pred( y_pred_binarized)
+precision = metrics.precision_score(y_test, y_pred_binarized) 
+recall  = metrics.recall_score(y_test, y_pred_binarized) 
+print("F1-Score: ", f1) 
+print("Precision: ", precision)
+print("Recall: ", recall)
