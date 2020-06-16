@@ -1,0 +1,9 @@
+diabetes = datasets.load_diabetes()
+
+x_train, x_test, y_train, y_test = train_test_split(diabetes.data, diabetes.target, test_size=0.2, random_state=4)
+
+boston = linear_model.Ridge(alpha=1.0)
+
+boston.fit(x_train, y_train)
+
+y_pred = boston.predict(x_test)
