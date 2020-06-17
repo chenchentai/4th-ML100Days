@@ -1,0 +1,40 @@
+(1)
+iris = datasets.load_iris()
+
+x_train, x_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.5, random_state=5)
+ 
+clf = DecisionTreeClassifier()
+
+clf.fit(x_train, y_train)
+
+y_pred = clf.predict(x_test)
+
+acc = metrics.accuracy_score(y_test, y_pred)
+print("Acuuracy: ", acc)
+
+out:Acuuracy:  0.9733333333333334
+
+print(iris.feature_names)
+
+out:['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']
+
+print("Feature importance: ", clf.feature_importances_)
+
+out:Feature importance:  [0.02013963 0.         0.57877547 0.40108489]
+(2)
+boston = load_boston()
+​
+x_train, x_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.25, random_state=4)
+​
+clf = DecisionTreeClassifier()
+​
+clf.fit(x_train, y_train)
+​
+y_pred = clf.predict(x_test)
+
+acc = metrics.accuracy_score(y_test, y_pred)
+print("Acuuracy: ", acc)
+
+print(iris.feature_names)
+
+print("Feature importance: ", clf.feature_importances_)
