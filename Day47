@@ -1,0 +1,5 @@
+Best Accuracy: -0.020636 using {'max_depth': 5, 'n_estimators': 100}
+
+{'max_depth': 5, 'n_estimators': 100}
+
+0.02628264110872273
